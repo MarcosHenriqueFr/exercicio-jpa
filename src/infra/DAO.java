@@ -88,6 +88,12 @@ public class DAO<E> {
         return query.getResultList();
     }
 
+    // Consulta somente um por causa da função agregadora do SQL(AVG())
+    public E consultarUm(String nomeConsulta, Object... params){
+        List<E> lista = consultar(nomeConsulta, params);
+        return lista.isEmpty() ? null : lista.getFirst();
+    }
+
     // Fica mais flexivel, porque posso fechar e abrir de novo
     public void fechar(){
         em.close();
