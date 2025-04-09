@@ -75,6 +75,19 @@ public class DAO<E> {
         return query.getResultList();
     }
 
+
+    // Sempre que for fazer consultas, faça paginações
+    public List<E> consultar(String nomeConsulta, Object... params){
+        TypedQuery<E> query = em.createNamedQuery(nomeConsulta, classe);
+
+        // Já que os meus parametros vão ir de dois em dois, as informações de chave vão ser add
+        for(int i = 0; i < params.length; i += 2){
+            query.setParameter(params[i].toString(), params[i+1]);
+        }
+
+        return query.getResultList();
+    }
+
     // Fica mais flexivel, porque posso fechar e abrir de novo
     public void fechar(){
         em.close();
